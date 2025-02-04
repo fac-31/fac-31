@@ -43,46 +43,47 @@ form.addEventListener('submit', (event) => {
 
 */
 
+let gameState = "stopped";
+
+const gameTransitions = {
+    stopped: "angling",
+    angling: "powering",
+    powering: "throwing",
+    throwing: "throwing"
+}
+
 const keyDownHandler = (event) => {
     const spaceKey = 32;
-
     if (event.keyCode === spaceKey) {
-        
+        gameState = gameTransitions[gameState];
     }
 }
 
 document.addEventListener('keydown',keyDownHandler)
 
-
-
-let ballX;
-let ballY;
+let ball;
 let power;
-let powerBuilding;
+let powerChange = 20;
 let angle;
-let angleIncreasing;
+let angleChange = 0.1;
+
+const maxPower = 220;
+const minPower = 20;
+
+const maxAngle = 1;
+const minAngle = 0;
 
 const animateBall = () => {
 
-    console.log(circleWidth)
-
-    if (growing) {
-        circleWidth += 5;
-        if (circleWidth > 40) {
-            growing = false;
-        }
-    } else {
-        circleWidth -= 5;
-        if (circleWidth < 10) {
-            growing = true;
-        }
-    }
-
-    context.clearRect(0, 0, canvas.width, canvas.height);
-    drawCircle(canvas,context);
 }
 
 const animatePowerBar = () => {
+
+    power += powerChange;
+
+    if (power >= maxPower || power <= minPower) {
+        powerChange *= -1;
+    }
 
 }
 
@@ -98,7 +99,7 @@ const drawBall = (cvs, ctx) => {
 }
 
 const drawPowerBar = (cvs, ctx) => {
-
+    
 }
 
 const drawAngleLine = (cvs, ctx) => {
@@ -106,6 +107,19 @@ const drawAngleLine = (cvs, ctx) => {
 }
 
 const drawBin = (cvs, ctx) => {
+
+}
+
+const initialiseGame = () => {
+    ball = {
+        x: 20,
+        y: 20,
+        dx: 0,
+        dy: 0
+    }
+
+    power = 0;
+    angle = 0;
 
 }
 
