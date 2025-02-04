@@ -176,6 +176,7 @@ const animateBall = () => {
 
   context.clearRect(0, 0, canvas.width, canvas.height)
   drawCircle(canvas, context)
+
 }
 
 const animatePowerBar = () => {
@@ -245,7 +246,9 @@ const initialiseGame = () => {
 
 }
 
-const runGame = () => {}
+const runGame = () => {
+
+}
 
 const canvasSection = document.createElement('section')
 canvasSection.classList.add('content-section')
@@ -259,7 +262,7 @@ canvas.setAttribute('height', '500')
 canvas.style.border = '1px black solid'
 canvasSection.appendChild(canvas)
 
-const context = canvas.getContext('2d')
+const context = canvas.getContext("2d");
 
 const test = () => {
     context.clearRect(0,0,canvas.width,canvas.height)
