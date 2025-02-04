@@ -28,6 +28,7 @@ form.addEventListener('submit', (event) => {
     form.reset();
 });
 
+// Personalised greeting
 if (name) {
     const section1Heading = document.querySelector("#section1 h2");
     section1Heading.textContent = `Welcome, ${name}`;
