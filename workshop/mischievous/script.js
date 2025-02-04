@@ -1,32 +1,68 @@
 // Toggle hidden information
-const toggleButton = document.getElementById('btn-toggle1');
-const hiddenInfo = document.querySelector('.hidden-info');
+const toggleButton = document.getElementById("btn-toggle1");
+const hiddenInfo = document.querySelector(".hidden-info");
 
-toggleButton.addEventListener('click', () => {
-    hiddenInfo.classList.toggle('hidden-info');
+toggleButton.addEventListener("click", () => {
+	hiddenInfo.classList.toggle("hidden-info");
 });
 
 // Change background color of the box
-const colorButton = document.getElementById('btn-change-color');
-const colorBox = document.getElementById('color-box');
+const colorButton = document.getElementById("btn-change-color");
+const colorBox = document.getElementById("color-box");
 
-colorButton.addEventListener('click', () => {
-    const colors = ['#FF5733', '#33FF57', '#3357FF', '#F3FF33'];
-    const randomColor = colors[Math.floor(Math.random() * colors.length)];
-    colorBox.style.backgroundColor = randomColor;
+colorButton.addEventListener("click", () => {
+	const colors = ["#FF5733", "#33FF57", "#3357FF", "#F3FF33"];
+	const randomColor = colors[Math.floor(Math.random() * colors.length)];
+	colorBox.style.backgroundColor = randomColor;
 });
 
 // Form submission handling
-const form = document.getElementById('feedback-form');
-const formResponse = document.getElementById('form-response');
+const form = document.getElementById("feedback-form");
+const formResponse = document.getElementById("form-response");
 
-form.addEventListener('submit', (event) => {
-    event.preventDefault();
-    const name = document.getElementById('name').value;
-    const feedback = document.getElementById('feedback').value;
-    formResponse.textContent = `Thank you, ${name}, for your feedback: "${feedback}"`;
-    form.reset();
+form.addEventListener("submit", (event) => {
+	event.preventDefault();
+	const name = document.getElementById("name").value;
+	const feedback = document.getElementById("feedback").value;
+	formResponse.textContent = `Thank you, ${name}, for your feedback: "${feedback}"`;
+	form.reset();
 });
+
+// jaz edit
+let lightness = 50;
+
+let linkSection1 = document.getElementById("link-section1");
+let linkSection2 = document.getElementById("link-section2");
+let linkSection3 = document.getElementById("link-section3");
+
+linkSection1.addEventListener("click", () => {
+	lightness = 15;
+});
+
+linkSection2.addEventListener("click", () => {
+	lightness = 30;
+});
+
+linkSection3.addEventListener("click", () => {
+	lightness = 50;
+});
+
+let header = document.querySelector("header");
+
+document.addEventListener("mousemove", getCoordinate);
+
+function getCoordinate(event) {
+	let x = event.clientX;
+	let y = event.clientY;
+
+	let hue = (x / 6) % 360;
+	let saturation = (y / 10) % 100;
+
+	document.documentElement.style.setProperty(
+		"--primary-color",
+		`hsl(${hue}, ${saturation}%, ${lightness}%)`
+	);
+}
 
 /* PROMPTS FOR ADDITIONAL INTERACTIONS
 
