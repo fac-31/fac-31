@@ -47,13 +47,41 @@ colorButton.addEventListener("click", () => {
 const form = document.getElementById("feedback-form");
 const formResponse = document.getElementById("form-response");
 
+// Form submission handling
+const form = document.getElementById("feedback-form")
+const formResponse = document.getElementById("form-response")
+
+const label1 = document.querySelector('label[for="name"]')
+const label2 = document.querySelector('label[for="feedback"]')
+
+label1.innerText = "What is 11 times 11?"
+label2.innerText = "And what is 11 times 11?"
+
 form.addEventListener("submit", (event) => {
-	event.preventDefault();
-	const name = document.getElementById("name").value;
-	const feedback = document.getElementById("feedback").value;
-	formResponse.textContent = `Thank you, ${name}, for your feedback: "${feedback}"`;
-	form.reset();
-});
+  event.preventDefault()
+  const answer1 = document.getElementById("name").value
+  const answer2 = document.getElementById("feedback").value
+  formResponse.style =
+    "background-color: lightgrey; color: blue;font-family: Courier;text-align: center; font-weight: bold;"
+  if (isNaN(answer1) || isNaN(answer2)) {
+    alert("Both of your answers must be a number!")
+    form.reset()
+  } else if (answer1 == "" || answer2 == "") {
+    formResponse.textContent =
+      "Hmm, don't imagine you'll get away with not skipping a question!"
+    form.reset()
+  } else if (answer1 != 121) {
+    formResponse.textContent = "You really don't know what 11 times 11 is?"
+  } else if (answer2 != 1001) {
+    alert(
+      "ERROR 101: INSUFF 01100010 01101001 01101110 01100001 01110010 01111001 "
+    )
+  } else {
+    var x = 10
+    formResponse.textContent = "WELL DONE! Your reward is..."
+    setTimeout(() => (formResponse.textContent = "NOTHING!"), 6000)
+  }
+})
 
 // jaz edit
 let lightness = 50;
