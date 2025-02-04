@@ -6,6 +6,14 @@ toggleButton.addEventListener('click', () => {
     hiddenInfo.classList.toggle('hidden-info');
 });
 
+
+//Change header 
+document.querySelector("header h1").textContent = "Clickspire";
+
+// Change primary color
+document.documentElement.style.setProperty("--primary-color", "#023e8a");
+
+
 //interactive spinning button
 const colorButton = document.getElementById('btn-change-color');
 
@@ -109,13 +117,6 @@ if (name) {
     section1Heading.textContent = `Welcome, ${name}`;
 }
 
-//Form 
-/* Anna V - I believe these few lines need to go above formResponse (line45). 
- Let me know if that works for you/ feel free to add */ 
-if (name) {
-    const section1heading = document.querySelector("#section1 h2")
-    section1heading.textContent = 'Welcome, $nameInput'
-}
 
 
 /* PROMPTS FOR ADDITIONAL INTERACTIONS
