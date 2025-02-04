@@ -11,6 +11,7 @@ const colorButton = document.getElementById('btn-change-color');
 
 colorButton.addEventListener('click', function() {
     colorButton.style.animation = "spin 0.5s";
+    zenQuote();
 setTimeout(() => {
     colorButton.style.animation = "";
 }, 500);
@@ -100,19 +101,6 @@ form.addEventListener('submit', (event) => {
     const feedback = document.getElementById('feedback').value;
     formResponse.textContent = `Thank you, ${name}, for your feedback: "${feedback}"`;
     form.reset();
-
-    // Zen quote image
-    const section3 = document.getElementById("section3");
-
-    // Delete any image we had before
-    let image = section3.querySelector("img");
-    if (image)
-        image.remove();
-
-    // create a new one
-    image = document.createElement("img");
-    image.setAttribute("href", "https://zenquotes.io/api/image");
-    section3.appendChild(image);
 });
 
 // Personalised greeting
