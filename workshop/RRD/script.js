@@ -41,16 +41,48 @@ const toggleDarkMode = () => {
 }
 
 // Form submission handling
-const form = document.getElementById('feedback-form')
-const formResponse = document.getElementById('form-response')
-
+const form = document.getElementById('feedback-form');
+const formResponse = document.getElementById('form-response');
 form.addEventListener('submit', (event) => {
-  event.preventDefault()
-  const name = document.getElementById('name').value
-  const feedback = document.getElementById('feedback').value
-  formResponse.textContent = `Thank you, ${name}, for your feedback: "${feedback}"`
-  form.reset()
+    event.preventDefault();
+    const name = document.getElementById('name').value;
+    const feedback = document.getElementById('feedback').value;
+    const button = document.querySelector('button[value=Submit]');
+    if(!name || !feedback) {
+        alert("Name or feedback cannot be empty! :)")
+    } else {
+    const checker = new FormData(form, button)
+    for (const [key, value] of checker) {
+        formResponse.innerText += `${key}: ${value}\n`;
+    }
+    form.reset();
+    }
+});
+// joke api 
+let sec3 = document.getElementById('section3');
+let jokeDiv = document.createElement('div');
+jokeDiv.id = "joker";
+jokeDiv.style.padding = '5px';
+sec3.appendChild(jokeDiv);
+let jokeButt = document.createElement('button');
+jokeButt.innerText = 'Tell me a joke';
+jokeButt.style.width = '100%'
+sec3.appendChild(jokeButt);
+
+async function jokeList(){
+    let response = await fetch('https://gist.githubusercontent.com/cynthiateeters/7acb6e858cd803835f917bb7572deeaf/raw/e3bb03b6773f58bd8c66073f9ef5757479725236/jokes.json')
+    let jokes = await response.json()
+    return jokes
+}
+function jokeFunc() {
+    return jokeList().then((jokes) => {
+    let len = jokes.length;
+    let random = Math.floor(Math.random() * len);
+    jokeDiv.style.border = 'black solid 2px'
+    jokeDiv.innerText = jokes[random].joke
 })
+}
+jokeButt.addEventListener('click',jokeFunc)
 
 /* PROMPTS FOR ADDITIONAL INTERACTIONS
 
