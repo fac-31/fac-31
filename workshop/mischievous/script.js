@@ -44,25 +44,27 @@ form.addEventListener('submit', (event) => {
 */
 
 //Sefi - Change text on hover.
-//const section1Title = document.getElementById('section1Title');
+//TODO when time permits: initiliaze all relevant elements and event listeners in a single function.
+const section1Title = document.getElementById('section1Title');
 const section2Title = document.getElementById('section2Title');
-//const section3Title = document.getElementById('section3Title');
+const section3Title = document.getElementById('section3Title');
+let originalTexts = [section1Title.innerText, section2Title.innerText, section3Title.innerText]
+section1Title.addEventListener('mouseenter' , (event) => { OnMouseEnter(0, event);})
+section1Title.addEventListener('mouseleave',  (event) => { OnMouseLeave(0, event);})
+section2Title.addEventListener('mouseenter' , () => { OnMouseEnter(1);})
+section2Title.addEventListener('mouseleave',  (event) => { OnMouseLeave(1, event);})
+section3Title.addEventListener('mouseenter' , () => { OnMouseEnter(2);})
+section3Title.addEventListener('mouseleave',  (event) => { OnMouseLeave(2, event);})
 
-section2Title.addEventListener("mouseenter", OnMouseEnter)
-section2Title.addEventListener("mouseleave", OnMouseLeave)
-
-let originalText = section2Title.innerText;
-//let originalTexts = [section2Title.innerText, section2Title.innerText, section2Title.innerText]
-
-function OnMouseEnter(event)
+function OnMouseEnter(index)
 {
-    let anagram = AnagramizeText([...originalText]);
-    section2Title.innerText = anagram.join('');
+    let anagram = AnagramizeText([...originalTexts[index]]);
+    event.target.innerText = anagram.join('');
 }
 
-function OnMouseLeave(event)
+function OnMouseLeave(index, event)
 {
-    section2Title.innerText = originalText;
+    event.target.innerText = originalTexts[index];
 }
 
 //The Fisher-Yates (Knuth) Shuffle algorithm
