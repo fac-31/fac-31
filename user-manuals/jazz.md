@@ -8,7 +8,7 @@ assignees: ''
 ---
 
 # Jaz
-## they/them
+## They/Them
 
 ### How I get my best work done:
 I get my best work done when there is space for me to explore and experiment with an idea. I always appreciate collaboration. 
