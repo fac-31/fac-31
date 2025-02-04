@@ -28,6 +28,10 @@ form.addEventListener('submit', (event) => {
     form.reset();
 });
 
+if (name) {
+    const section1Heading = document.querySelector("#section1 h2");
+    section1Heading.textContent = `Welcome, ${name}`;
+}
 
 /* PROMPTS FOR ADDITIONAL INTERACTIONS
 
@@ -43,3 +47,5 @@ Issue 1. Add functionality to highlight the navigation link of the current secti
 10. Fetch and display data from a public API (e.g., random jokes or quotes).
 
 */
+
+
