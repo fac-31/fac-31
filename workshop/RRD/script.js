@@ -74,3 +74,89 @@ jokeButt.addEventListener('click',jokeFunc)
 10. Fetch and display data from a public API (e.g., random jokes or quotes).
 
 */
+
+const keyDownHandler = (event) => {
+    const spaceKey = 32;
+
+    if (event.keyCode === spaceKey) {
+        
+    }
+}
+
+document.addEventListener('keydown',keyDownHandler)
+
+
+
+let ballX;
+let ballY;
+let power;
+let powerBuilding;
+let angle;
+let angleIncreasing;
+
+const animateBall = () => {
+
+    console.log(circleWidth)
+
+    if (growing) {
+        circleWidth += 5;
+        if (circleWidth > 40) {
+            growing = false;
+        }
+    } else {
+        circleWidth -= 5;
+        if (circleWidth < 10) {
+            growing = true;
+        }
+    }
+
+    context.clearRect(0, 0, canvas.width, canvas.height);
+    drawCircle(canvas,context);
+}
+
+const animatePowerBar = () => {
+
+}
+
+const animateAngleLine = () => {
+
+}
+
+const drawBall = (cvs, ctx) => {
+    ctx.fillStyle = "red";
+    ctx.beginPath();
+    ctx.ellipse(cvs.width/2, cvs.height/2, circleWidth, circleWidth, 0, 0, Math.PI * 2);
+    ctx.fill();
+}
+
+const drawPowerBar = (cvs, ctx) => {
+
+}
+
+const drawAngleLine = (cvs, ctx) => {
+
+}
+
+const drawBin = (cvs, ctx) => {
+
+}
+
+const runGame = () => {
+
+}
+
+const canvasSection = document.createElement("section");
+canvasSection.classList.add("content-section")
+canvasSection.style.display = "flex";
+canvasSection.style.justifyContent = "center";
+document.querySelector("main").appendChild(canvasSection);
+
+const canvas = document.createElement("canvas");
+canvas.setAttribute("width","700");
+canvas.setAttribute("height","500");
+canvas.style.border = "1px black solid"
+canvasSection.appendChild(canvas);
+
+const context = canvas.getContext("2d");
+
+setInterval(runGame, 100)
