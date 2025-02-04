@@ -42,3 +42,34 @@ form.addEventListener('submit', (event) => {
 10. Fetch and display data from a public API (e.g., random jokes or quotes).
 
 */
+
+//Sefi - Change text on hover.
+//const section1Title = document.getElementById('section1Title');
+const section2Title = document.getElementById('section2Title');
+//const section3Title = document.getElementById('section3Title');
+
+section2Title.addEventListener("mouseenter", OnMouseEnter)
+section2Title.addEventListener("mouseleave", OnMouseLeave)
+
+let originalText = section2Title.innerText;
+//let originalTexts = [section2Title.innerText, section2Title.innerText, section2Title.innerText]
+
+function OnMouseEnter(event)
+{
+    let anagram = AnagramizeText([...originalText]);
+    section2Title.innerText = anagram.join('');
+}
+
+function OnMouseLeave(event)
+{
+    section2Title.innerText = originalText;
+}
+
+//The Fisher-Yates (Knuth) Shuffle algorithm
+function AnagramizeText(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+}
