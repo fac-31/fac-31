@@ -38,6 +38,55 @@ const colorBox = document.getElementById('color-box');
 if (colorBox) {
     colorBox.style.display = "none"; 
 }
+
+// Zen Quote
+function zenQuote(doAnimate = true) {
+    const section = document.getElementById("section2");
+
+    // create image if not made yet
+    let image = section.querySelector("img");
+    if (!image) {
+        image = document.createElement("img");
+        image.setAttribute("src", "https://zenquotes.io/api/image");
+        image.style.maxWidth = "100%";
+        image.style.height = "auto";
+        section.appendChild(image);
+    }
+
+    if (doAnimate) {
+        let animate = null;
+        let random = Math.floor(Math.random() * 3);
+        if (random == 0) {
+            animate = [
+                { transform: "scale(0) rotate(3600deg)" },
+                { transform: "scale(1) rotate(0deg)" },
+            ];
+        } else if (random == 1) {
+            animate = [
+                { transform: "scaleX(0) scaleY(0)" },
+                { transform: "scaleX(1.5) scaleY(0.1)" },
+                { transform: "scaleX(1) scaleY(1)" },
+            ];
+        } else if (random == 2) {
+            animate = [
+                { transform: "scale(0) rotateX(720deg)" },
+                { transform: "scale(1) rotateX(0deg)" },
+            ];
+        }
+
+        image.animate(animate, {
+            duration: 2000,
+            easing: "ease-out",
+        });
+
+        image.style.transform = "scale(1)";
+    } else {
+        image.style.transform = "scale(0)";
+    }
+}
+
+// Pre-load the image, don't visually show it
+zenQuote(false);
         
 // Form submission handling
 const form = document.getElementById('feedback-form');
