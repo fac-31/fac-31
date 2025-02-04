@@ -33,23 +33,11 @@ colorButton.addEventListener('click', () => {
     const colors = ['#FF5733', '#33FF57', '#3357FF', '#F3FF33'];
     const randomColor = colors[Math.floor(Math.random() * colors.length)];
     colorBox.style.backgroundColor = randomColor;
-});// Change background color of the box
-const colorButton = document.getElementById("btn-change-color");
-const colorBox = document.getElementById("color-box");
-
-colorButton.addEventListener("click", () => {
-	const colors = ["#FF5733", "#33FF57", "#3357FF", "#F3FF33"];
-	const randomColor = colors[Math.floor(Math.random() * colors.length)];
-	colorBox.style.backgroundColor = randomColor;
 });
 
 // Form submission handling
 const form = document.getElementById("feedback-form");
 const formResponse = document.getElementById("form-response");
-
-// Form submission handling
-const form = document.getElementById("feedback-form")
-const formResponse = document.getElementById("form-response")
 
 const label1 = document.querySelector('label[for="name"]')
 const label2 = document.querySelector('label[for="feedback"]')
