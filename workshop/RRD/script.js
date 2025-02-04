@@ -89,6 +89,75 @@ function jokeFunc() {
 }
 jokeButt.addEventListener('click',jokeFunc)
 
+// Maze game
+let mazeDiv = document.createElement('div');
+let mazeCanvas = document.createElement('canvas');
+mazeCanvas.id = 'mazeCanvas'
+let ctx = mazeCanvas.getContext('2d');
+mazeCanvas.style.width = '400px';
+mazeCanvas.style.height = '400px';
+let scale = window.devicePixelRatio;
+mazeCanvas.width = Math.floor(400 * scale)
+mazeCanvas.height = Math.floor(400 * scale)
+ctx.scale(scale, scale)
+mazeCanvas.style.border = 'solid black 2px'
+sec3.appendChild(mazeDiv.appendChild(mazeCanvas));
+const maze = [
+    [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+    [0,0,0,0,1,0,1,0,0,0,0,1,0,1,0,0,0,0,0,1],
+    [1,0,1,0,1,0,1,0,1,1,0,1,0,1,0,1,1,1,0,1],
+    [1,0,1,0,0,0,1,0,1,0,0,0,0,1,0,0,0,1,0,1],
+    [1,1,1,1,1,0,1,0,1,1,1,1,1,1,1,1,0,1,0,1],
+    [1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,0,1,0,1],
+    [1,0,1,1,1,1,1,1,1,0,1,0,1,1,0,1,0,1,0,1],
+    [1,0,0,0,0,1,0,0,1,0,1,0,1,0,0,1,0,1,0,1],
+    [1,1,1,1,0,1,0,1,1,0,1,0,1,0,1,1,0,1,0,1],
+    [1,0,0,1,0,0,0,1,0,0,0,0,1,0,0,0,0,1,0,1],
+    [1,0,1,1,1,1,1,1,0,1,1,1,1,1,1,1,0,1,0,1],
+    [1,0,1,0,0,0,0,1,0,0,0,0,0,0,0,1,0,1,0,1],
+    [1,0,1,0,1,1,0,1,1,1,1,1,1,1,0,1,0,1,0,1],
+    [1,0,1,0,1,0,0,0,0,0,0,0,1,0,0,1,0,1,0,1],
+    [1,0,1,1,1,1,1,1,1,1,1,0,1,1,1,1,0,1,0,1],
+    [1,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,1,0,1],
+    [1,1,0,1,1,0,1,0,1,1,1,1,1,0,1,1,1,1,0,1],
+    [1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+    [1,0,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+    [1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
+  ];
+  let pos = [1, 0]
+function drawWalls(i, j) {
+    ctx.fillStyle = 'red'
+    ctx.fillRect((j * 20), (i * 20), 20, 20)
+}
+function drawMe() {
+    ctx.fillStyle = 'purple';
+    ctx.fillRect((pos[1] * 20), (pos[0] * 20), 20, 20)
+}
+function drawMaze() {
+    for (let i = 0; i < maze.length; i++) {
+        for (let j = 0; j < maze[i].length; j++) {
+            if (maze[i][j] === 1) {
+                console.log(i, j)
+                drawWalls(i, j)
+            }
+        }
+    }
+    drawMe();
+}
+function directions(event) {
+    console.log(event.key)
+    switch(true) {
+        case event.key = 'a' : pos[0] -= 1;
+        break;
+        case event.key = 'w' : pos[1] -= 1;
+        break;
+        case event.key = 'd' : pos[0] += 1;
+        break;
+        case event.key = 's' : pos[1] += 1;
+    }
+}
+document.addEventListener('keypress', directions, false)
+
 /* PROMPTS FOR ADDITIONAL INTERACTIONS
 
 1. Add functionality to highlight the navigation link of the current section as the user scrolls.
@@ -103,6 +172,7 @@ jokeButt.addEventListener('click',jokeFunc)
 10. Fetch and display data from a public API (e.g., random jokes or quotes).
 
 */
+
 
 const keyDownHandler = (event) => {
     const spaceKey = 32;
