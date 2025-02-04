@@ -1,32 +1,56 @@
+// On page load
+document.addEventListener('DOMContentLoaded', (_event) => {
+  if (localStorage.getItem('display-mode') === 'enabled') {
+    document.body.classList.add('dark-mode')
+  }
+})
+
 // Toggle hidden information
-const toggleButton = document.getElementById('btn-toggle1');
-const hiddenInfo = document.querySelector('.hidden-info');
+const toggleButton = document.getElementById('btn-toggle1')
+const hiddenInfo = document.querySelector('.hidden-info')
 
 toggleButton.addEventListener('click', () => {
-    hiddenInfo.classList.toggle('hidden-info');
-});
+  hiddenInfo.classList.toggle('hidden-info')
+})
 
 // Change background color of the box
-const colorButton = document.getElementById('btn-change-color');
-const colorBox = document.getElementById('color-box');
+const colorButton = document.getElementById('btn-change-color')
+const colorBox = document.getElementById('color-box')
 
 colorButton.addEventListener('click', () => {
-    const colors = ['#FF5733', '#33FF57', '#3357FF', '#F3FF33'];
-    const randomColor = colors[Math.floor(Math.random() * colors.length)];
-    colorBox.style.backgroundColor = randomColor;
-});
+  const colors = ['#FF5733', '#33FF57', '#3357FF', '#F3FF33']
+  const randomColor = colors[Math.floor(Math.random() * colors.length)]
+  colorBox.style.backgroundColor = randomColor
+})
+
+// Dark Mode toggle button
+const darkModeButton = document.createElement('button')
+darkModeButton.id = 'btn-dark-mode'
+darkModeButton.textContent = 'Dark Mode'
+
+const section2 = document.querySelector('#section2')
+section2.appendChild(darkModeButton)
+
+darkModeButton.addEventListener('click', () => {
+  toggleDarkMode()
+})
+
+const toggleDarkMode = () => {
+  let isDarkMode = document.body.classList.toggle('dark-mode')
+  localStorage.setItem('display-mode', isDarkMode ? 'enabled' : 'disabled')
+}
 
 // Form submission handling
-const form = document.getElementById('feedback-form');
-const formResponse = document.getElementById('form-response');
+const form = document.getElementById('feedback-form')
+const formResponse = document.getElementById('form-response')
 
 form.addEventListener('submit', (event) => {
-    event.preventDefault();
-    const name = document.getElementById('name').value;
-    const feedback = document.getElementById('feedback').value;
-    formResponse.textContent = `Thank you, ${name}, for your feedback: "${feedback}"`;
-    form.reset();
-});
+  event.preventDefault()
+  const name = document.getElementById('name').value
+  const feedback = document.getElementById('feedback').value
+  formResponse.textContent = `Thank you, ${name}, for your feedback: "${feedback}"`
+  form.reset()
+})
 
 /* PROMPTS FOR ADDITIONAL INTERACTIONS
 
