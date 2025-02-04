@@ -1,4 +1,39 @@
+
+//jumping button
+const jumpingButton = document.getElementById('btn-toggle1');
+const hiddenInfo = document.querySelector('.hidden-info');
+const sectionOneHeading = document.querySelector("#section1 > h2");
+const sectionOneParagraph = document.querySelector("#section1 > p");
+sectionOneHeading.innerText = "Press the button below for a fun surprise!";
+sectionOneHeading.style.fontSize = "28px";
+sectionOneParagraph.innerText = "";
+
+jumpingButton.innerText = 'PRESS ME';
+jumpingButton.style.borderRadius = "100%";
+jumpingButton.style.color = "beige";
+jumpingButton.style.fontSize = "20px";
+jumpingButton.style.height = "100px";
+jumpingButton.style.width = "100px";
+jumpingButton.style.backgroundImage = "radial-gradient(#ad1818 55%, #000000)";
+jumpingButton.style.display = "block";
+jumpingButton.style.margin = "auto";
+document.getElementById("section1").style.textAlign = "center";
+
+jumpingButton.onmouseenter = () => {
+    jumpingButton.style.position = "absolute";
+    jumpingButton.style.top = `${Math.floor(Math.random() * 1000)}px`;
+    jumpingButton.style.left = `${Math.floor(Math.random() * 1000)}px`;
+};
+
 // Change background color of the box
+const colorButton = document.getElementById('btn-change-color');
+const colorBox = document.getElementById('color-box');
+
+colorButton.addEventListener('click', () => {
+    const colors = ['#FF5733', '#33FF57', '#3357FF', '#F3FF33'];
+    const randomColor = colors[Math.floor(Math.random() * colors.length)];
+    colorBox.style.backgroundColor = randomColor;
+});// Change background color of the box
 const colorButton = document.getElementById("btn-change-color");
 const colorBox = document.getElementById("color-box");
 
