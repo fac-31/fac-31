@@ -1,11 +1,3 @@
-// Toggle hidden information
-const toggleButton = document.getElementById("btn-toggle1");
-const hiddenInfo = document.querySelector(".hidden-info");
-
-toggleButton.addEventListener("click", () => {
-	hiddenInfo.classList.toggle("hidden-info");
-});
-
 // Change background color of the box
 const colorButton = document.getElementById("btn-change-color");
 const colorBox = document.getElementById("color-box");
@@ -78,3 +70,50 @@ function getCoordinate(event) {
 10. Fetch and display data from a public API (e.g., random jokes or quotes).
 
 */
+
+//Sefi - Change text on hover.
+//TODO when time permits: initiliaze all relevant elements and event listeners in a single function.
+const section1Title = document.getElementById("section1Title");
+const section2Title = document.getElementById("section2Title");
+const section3Title = document.getElementById("section3Title");
+let originalTexts = [
+	section1Title.innerText,
+	section2Title.innerText,
+	section3Title.innerText,
+];
+section1Title.addEventListener("mouseenter", (event) => {
+	OnMouseEnter(0, event);
+});
+section1Title.addEventListener("mouseleave", (event) => {
+	OnMouseLeave(0, event);
+});
+section2Title.addEventListener("mouseenter", () => {
+	OnMouseEnter(1);
+});
+section2Title.addEventListener("mouseleave", (event) => {
+	OnMouseLeave(1, event);
+});
+section3Title.addEventListener("mouseenter", () => {
+	OnMouseEnter(2);
+});
+section3Title.addEventListener("mouseleave", (event) => {
+	OnMouseLeave(2, event);
+});
+
+function OnMouseEnter(index) {
+	let anagram = AnagramizeText([...originalTexts[index]]);
+	event.target.innerText = anagram.join("");
+}
+
+function OnMouseLeave(index, event) {
+	event.target.innerText = originalTexts[index];
+}
+
+//The Fisher-Yates (Knuth) Shuffle algorithm
+function AnagramizeText(array) {
+	for (let i = array.length - 1; i > 0; i--) {
+		const j = Math.floor(Math.random() * (i + 1));
+		[array[i], array[j]] = [array[j], array[i]];
+	}
+	return array;
+}
