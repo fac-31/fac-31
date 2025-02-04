@@ -17,10 +17,14 @@ toggleButton.addEventListener('click', () => {
 const colorButton = document.getElementById('btn-change-color')
 const colorBox = document.getElementById('color-box')
 
+let check = true;
 colorButton.addEventListener('click', () => {
   const colors = ['#FF5733', '#33FF57', '#3357FF', '#F3FF33']
   const randomColor = colors[Math.floor(Math.random() * colors.length)]
   colorBox.style.backgroundColor = randomColor
+  colorBox.style.transition = 'ease-in 4s'
+  colorBox.style.transform = `rotate(${check ? '360deg': '0deg'})`
+  check = !check
 })
 
 // Dark Mode toggle button
@@ -39,6 +43,7 @@ const toggleDarkMode = () => {
   let isDarkMode = document.body.classList.toggle('dark-mode')
   localStorage.setItem('display-mode', isDarkMode ? 'enabled' : 'disabled')
 }
+
 
 // Form submission handling
 const form = document.getElementById('feedback-form');
