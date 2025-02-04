@@ -104,51 +104,59 @@ jokeButt.addEventListener('click',jokeFunc)
 
 */
 
+let gameState = "stopped";
+
+const gameTransitions = {
+    stopped: "angling",
+    angling: "powering",
+    powering: "throwing",
+    throwing: "throwing"
+}
+
 const keyDownHandler = (event) => {
     const spaceKey = 32;
-
     if (event.keyCode === spaceKey) {
-        
+        gameState = gameTransitions[gameState];
     }
 }
 
 document.addEventListener('keydown',keyDownHandler)
 
-
-
-let ballX;
-let ballY;
+let ball;
 let power;
-let powerBuilding;
+let powerChange = 20;
 let angle;
-let angleIncreasing;
+let angleMultiplier;
+let angleMultiplierChange = 0.1;
+
+const maxPower = 220;
+const minPower = 20;
+
+const maxAngle = 1;
+const minAngle = 0;
 
 const animateBall = () => {
 
-    console.log(circleWidth)
-
-    if (growing) {
-        circleWidth += 5;
-        if (circleWidth > 40) {
-            growing = false;
-        }
-    } else {
-        circleWidth -= 5;
-        if (circleWidth < 10) {
-            growing = true;
-        }
-    }
-
-    context.clearRect(0, 0, canvas.width, canvas.height);
-    drawCircle(canvas,context);
 }
 
 const animatePowerBar = () => {
+
+    power += powerChange;
+
+    if (power >= maxPower || power <= minPower) {
+        powerChange *= -1;
+    }
 
 }
 
 const animateAngleLine = () => {
 
+    angleMultiplier += angleMultiplierChange;
+    angle = angleMultiplier*(Math.PI/2);
+
+    if (angleMultiplier >= maxAngle || angleMultiplier <= minAngle) {
+        angleMultiplierChange *= -1;
+    }
 }
 
 const drawBall = (cvs, ctx) => {
@@ -159,14 +167,34 @@ const drawBall = (cvs, ctx) => {
 }
 
 const drawPowerBar = (cvs, ctx) => {
-
+    ctx.fillStyle = "red";
+    ctx.fillRect(20,(cvs.height-(20+power)),40,power)
 }
 
 const drawAngleLine = (cvs, ctx) => {
-
+    ctx.strokeStyle = "black";
+    ctx.lineWidth = "5"
+    ctx.beginPath();
+    ctx.moveTo(100, cvs.height-20);
+    ctx.lineTo(100 + Math.cos(angle)*80, cvs.height-(20+Math.sin(angle)*80));
+    ctx.stroke();
 }
 
 const drawBin = (cvs, ctx) => {
+
+}
+
+const initialiseGame = () => {
+    ball = {
+        x: 20,
+        y: 20,
+        dx: 0,
+        dy: 0
+    }
+
+    power = 20;
+    angle = 0;
+    angleMultiplier = 0;
 
 }
 
@@ -188,4 +216,20 @@ canvasSection.appendChild(canvas);
 
 const context = canvas.getContext("2d");
 
-setInterval(runGame, 100)
+const test = () => {
+    context.clearRect(0,0,canvas.width,canvas.height)
+    drawPowerBar(canvas,context);
+    drawAngleLine(canvas,context)
+    if (gameState === "angling") {
+        animateAngleLine();
+        console.log("x: "+Math.cos(angle) + "y: " + Math.sin(angle));
+    } else if (gameState === "powering") {
+        animatePowerBar();
+        console.log("power: " + power);
+    } else if (gameState === "throwing") {
+        animateBall();
+    }
+}
+
+initialiseGame();
+setInterval(test, 100);
