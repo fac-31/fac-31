@@ -27,7 +27,7 @@ setTimeout(() => {
 
 // Form submission handling
 const form = document.getElementById('feedback-form');
-const formResponse = document.getElementById('section1');
+const formResponse = document.querySelector('#section1 p');
 
 let name = "";
 const formSection = document.getElementById("section3")
@@ -83,6 +83,10 @@ form.addEventListener('submit', (event) => {
       formSection.style.display = "none"
     
     name = formName;
+    if (name) {
+        const section1Heading = document.querySelector("#section1 h2");
+        section1Heading.textContent = `Welcome, ${name}`;
+    }
     formResponse.textContent = `Thank you, ${name}, for your feedback: "${feedback}"`;
   
 
@@ -92,10 +96,7 @@ form.addEventListener('submit', (event) => {
 });
 
 // Personalised greeting
-if (name) {
-    const section1Heading = document.querySelector("#section1 h2");
-    section1Heading.textContent = `Welcome, ${name}`;
-}
+
 
 
   
