@@ -17,13 +17,13 @@ toggleButton.addEventListener('click', () => {
 const colorButton = document.getElementById('btn-change-color')
 const colorBox = document.getElementById('color-box')
 
-let check = true;
+let check = true
 colorButton.addEventListener('click', () => {
   const colors = ['#FF5733', '#33FF57', '#3357FF', '#F3FF33']
   const randomColor = colors[Math.floor(Math.random() * colors.length)]
   colorBox.style.backgroundColor = randomColor
   colorBox.style.transition = 'ease-in 4s'
-  colorBox.style.transform = `rotate(${check ? '360deg': '0deg'})`
+  colorBox.style.transform = `rotate(${check ? '360deg' : '0deg'})`
   check = !check
 })
 
@@ -44,50 +44,51 @@ const toggleDarkMode = () => {
   localStorage.setItem('display-mode', isDarkMode ? 'enabled' : 'disabled')
 }
 
-
 // Form submission handling
-const form = document.getElementById('feedback-form');
-const formResponse = document.getElementById('form-response');
+const form = document.getElementById('feedback-form')
+const formResponse = document.getElementById('form-response')
 form.addEventListener('submit', (event) => {
-    event.preventDefault();
-    const name = document.getElementById('name').value;
-    const feedback = document.getElementById('feedback').value;
-    const button = document.querySelector('button[value=Submit]');
-    if(!name || !feedback) {
-        alert("Name or feedback cannot be empty! :)")
-    } else {
+  event.preventDefault()
+  const name = document.getElementById('name').value
+  const feedback = document.getElementById('feedback').value
+  const button = document.querySelector('button[value=Submit]')
+  if (!name || !feedback) {
+    alert('Name or feedback cannot be empty! :)')
+  } else {
     const checker = new FormData(form, button)
     for (const [key, value] of checker) {
-        formResponse.innerText += `${key}: ${value}\n`;
+      formResponse.innerText += `${key}: ${value}\n`
     }
-    form.reset();
-    }
-});
-// joke api 
-let sec3 = document.getElementById('section3');
-let jokeDiv = document.createElement('div');
-jokeDiv.id = "joker";
-jokeDiv.style.padding = '5px';
-sec3.appendChild(jokeDiv);
-let jokeButt = document.createElement('button');
-jokeButt.innerText = 'Tell me a joke';
+    form.reset()
+  }
+})
+// joke api
+let sec3 = document.getElementById('section3')
+let jokeDiv = document.createElement('div')
+jokeDiv.id = 'joker'
+jokeDiv.style.padding = '5px'
+sec3.appendChild(jokeDiv)
+let jokeButt = document.createElement('button')
+jokeButt.innerText = 'Tell me a joke'
 jokeButt.style.width = '100%'
-sec3.appendChild(jokeButt);
+sec3.appendChild(jokeButt)
 
-async function jokeList(){
-    let response = await fetch('https://gist.githubusercontent.com/cynthiateeters/7acb6e858cd803835f917bb7572deeaf/raw/e3bb03b6773f58bd8c66073f9ef5757479725236/jokes.json')
-    let jokes = await response.json()
-    return jokes
+async function jokeList() {
+  let response = await fetch(
+    'https://gist.githubusercontent.com/cynthiateeters/7acb6e858cd803835f917bb7572deeaf/raw/e3bb03b6773f58bd8c66073f9ef5757479725236/jokes.json'
+  )
+  let jokes = await response.json()
+  return jokes
 }
 function jokeFunc() {
-    return jokeList().then((jokes) => {
-    let len = jokes.length;
-    let random = Math.floor(Math.random() * len);
+  return jokeList().then((jokes) => {
+    let len = jokes.length
+    let random = Math.floor(Math.random() * len)
     jokeDiv.style.border = 'black solid 2px'
     jokeDiv.innerText = jokes[random].joke
-})
+  })
 }
-jokeButt.addEventListener('click',jokeFunc)
+jokeButt.addEventListener('click', jokeFunc)
 
 // Maze game
 let mazeDiv = document.createElement('div');
@@ -158,6 +159,29 @@ function directions(event) {
 }
 document.addEventListener('keypress', directions, false)
 
+// Button to show the current weather
+const getWeather = async () => {
+  const url = `http://api.weatherapi.com/v1/current.json?key=ab1c8308025e428498b161444250402&q=London&aqi=no`
+
+  try {
+    const response = await fetch(url)
+    if (!response.ok) {
+      throw new Error('HTTP error!')
+    }
+    const data = await response.json()
+    console.log('Weather data, ' + JSON.stringify(data))
+  } catch (error) {
+    console.error('Error fetching')
+  }
+}
+
+const weatherButton = document.createElement('button')
+weatherButton.textContent = 'Show me the weather'
+weatherButton.style.width = '100%'
+weatherButton.style.marginTop = '11px'
+sec3.appendChild(weatherButton)
+weatherButton.addEventListener('click', () => getWeather())
+
 /* PROMPTS FOR ADDITIONAL INTERACTIONS
 
 1. Add functionality to highlight the navigation link of the current section as the user scrolls.
@@ -174,69 +198,121 @@ document.addEventListener('keypress', directions, false)
 */
 
 
+let gameState = "stopped";
+
+const gameTransitions = {
+    stopped: "angling",
+    angling: "powering",
+    powering: "throwing",
+    throwing: "throwing"
+}
+
 const keyDownHandler = (event) => {
     const spaceKey = 32;
-
     if (event.keyCode === spaceKey) {
-        
+        gameState = gameTransitions[gameState];
     }
 }
 
 document.addEventListener('keydown',keyDownHandler)
 
-
-
-let ballX;
-let ballY;
+let ball;
 let power;
-let powerBuilding;
+let powerChange = 20;
 let angle;
-let angleIncreasing;
+let angleMultiplier;
+let angleMultiplierChange = 0.1;
+
+const maxPower = 220;
+const minPower = 20;
+
+const maxAngle = 1;
+const minAngle = 0;
 
 const animateBall = () => {
+  console.log(circleWidth)
 
-    console.log(circleWidth)
-
-    if (growing) {
-        circleWidth += 5;
-        if (circleWidth > 40) {
-            growing = false;
-        }
-    } else {
-        circleWidth -= 5;
-        if (circleWidth < 10) {
-            growing = true;
-        }
+  if (growing) {
+    circleWidth += 5
+    if (circleWidth > 40) {
+      growing = false
     }
+  } else {
+    circleWidth -= 5
+    if (circleWidth < 10) {
+      growing = true
+    }
+  }
 
-    context.clearRect(0, 0, canvas.width, canvas.height);
-    drawCircle(canvas,context);
+  context.clearRect(0, 0, canvas.width, canvas.height)
+  drawCircle(canvas, context)
+
 }
 
 const animatePowerBar = () => {
+
+    power += powerChange;
+
+    if (power >= maxPower || power <= minPower) {
+        powerChange *= -1;
+    }
 
 }
 
 const animateAngleLine = () => {
 
+    angleMultiplier += angleMultiplierChange;
+    angle = angleMultiplier*(Math.PI/2);
+
+    if (angleMultiplier >= maxAngle || angleMultiplier <= minAngle) {
+        angleMultiplierChange *= -1;
+    }
 }
 
 const drawBall = (cvs, ctx) => {
-    ctx.fillStyle = "red";
-    ctx.beginPath();
-    ctx.ellipse(cvs.width/2, cvs.height/2, circleWidth, circleWidth, 0, 0, Math.PI * 2);
-    ctx.fill();
+  ctx.fillStyle = 'red'
+  ctx.beginPath()
+  ctx.ellipse(
+    cvs.width / 2,
+    cvs.height / 2,
+    circleWidth,
+    circleWidth,
+    0,
+    0,
+    Math.PI * 2
+  )
+  ctx.fill()
 }
 
 const drawPowerBar = (cvs, ctx) => {
-
+    ctx.fillStyle = "red";
+    ctx.fillRect(20,(cvs.height-(20+power)),40,power)
 }
 
 const drawAngleLine = (cvs, ctx) => {
-
+    ctx.strokeStyle = "black";
+    ctx.lineWidth = "5"
+    ctx.beginPath();
+    ctx.moveTo(100, cvs.height-20);
+    ctx.lineTo(100 + Math.cos(angle)*80, cvs.height-(20+Math.sin(angle)*80));
+    ctx.stroke();
 }
 
 const drawBin = (cvs, ctx) => {
+
+}
+
+const initialiseGame = () => {
+    ball = {
+        x: 20,
+        y: 20,
+        dx: 0,
+        dy: 0
+    }
+
+    power = 20;
+    angle = 0;
+    angleMultiplier = 0;
 
 }
 
@@ -244,18 +320,34 @@ const runGame = () => {
 
 }
 
-const canvasSection = document.createElement("section");
-canvasSection.classList.add("content-section")
-canvasSection.style.display = "flex";
-canvasSection.style.justifyContent = "center";
-document.querySelector("main").appendChild(canvasSection);
+const canvasSection = document.createElement('section')
+canvasSection.classList.add('content-section')
+canvasSection.style.display = 'flex'
+canvasSection.style.justifyContent = 'center'
+document.querySelector('main').appendChild(canvasSection)
 
-const canvas = document.createElement("canvas");
-canvas.setAttribute("width","700");
-canvas.setAttribute("height","500");
-canvas.style.border = "1px black solid"
-canvasSection.appendChild(canvas);
+const canvas = document.createElement('canvas')
+canvas.setAttribute('width', '700')
+canvas.setAttribute('height', '500')
+canvas.style.border = '1px black solid'
+canvasSection.appendChild(canvas)
 
 const context = canvas.getContext("2d");
 
-setInterval(runGame, 100)
+const test = () => {
+    context.clearRect(0,0,canvas.width,canvas.height)
+    drawPowerBar(canvas,context);
+    drawAngleLine(canvas,context)
+    if (gameState === "angling") {
+        animateAngleLine();
+        console.log("x: "+Math.cos(angle) + "y: " + Math.sin(angle));
+    } else if (gameState === "powering") {
+        animatePowerBar();
+        console.log("power: " + power);
+    } else if (gameState === "throwing") {
+        animateBall();
+    }
+}
+
+initialiseGame();
+setInterval(test, 100);
