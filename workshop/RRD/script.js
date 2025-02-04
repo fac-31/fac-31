@@ -158,7 +158,7 @@ function directions(event) {
     }
 }
 document.addEventListener('keypress', directions, false)
-
+drawMaze()
 // Button to show the current weather
 const getWeather = async () => {
   const url = `http://api.weatherapi.com/v1/current.json?key=ab1c8308025e428498b161444250402&q=London&aqi=no`
