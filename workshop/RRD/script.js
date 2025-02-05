@@ -135,10 +135,10 @@ function drawMe() {
     ctx.fillRect((pos[1] * 20), (pos[0] * 20), 20, 20)
 }
 function drawMaze() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height)
     for (let i = 0; i < maze.length; i++) {
         for (let j = 0; j < maze[i].length; j++) {
             if (maze[i][j] === 1) {
-                console.log(i, j)
                 drawWalls(i, j)
             }
         }
@@ -146,19 +146,21 @@ function drawMaze() {
     drawMe();
 }
 function directions(event) {
-    console.log(event.key)
     switch(true) {
-        case event.key = 'a' : pos[0] -= 1;
+        case event.key === 'a' : maze[pos[0]][pos[1] - 1] === 0 ? pos[1] -= 1 : null;
         break;
-        case event.key = 'w' : pos[1] -= 1;
+        case event.key === 'w' : maze[pos[0] - 1][pos[1]] === 0 ? pos[0] -= 1 : null;
         break;
-        case event.key = 'd' : pos[0] += 1;
+        case event.key === 'd' : maze[pos[0]][pos[1] + 1] === 0 ? pos[1] += 1 : null;
         break;
-        case event.key = 's' : pos[1] += 1;
+        case event.key === 's' : maze[pos[0] + 1][pos[1]] === 0 ? pos[0] += 1 : null;
+        break;
+        default: null;
     }
+    console.log(pos)
 }
 document.addEventListener('keypress', directions, false)
-drawMaze()
+window.setInterval(drawMaze, 1000)
 // Button to show the current weather
 const getWeather = async () => {
   const url = `http://api.weatherapi.com/v1/current.json?key=ab1c8308025e428498b161444250402&q=London&aqi=no`
